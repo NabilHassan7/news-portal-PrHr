@@ -145,26 +145,8 @@ const articleSearch = (categoryId) => {
 }
 
 //Modal Section
-// const displayArticleDetails = (articleDetails) =>{
-//     const modalTitle = document.getElementById('articleModalLabel');
-//     modalTitle.innerText = articleDetails[0].title;
-//     const articleModalDetails = document.getElementById('article-details');
-//     articleModalDetails.innerHTML = `
-//         <img src="${articleDetails.image_url}" class="img-fluid rounded-start" alt="">
-//     `
-// } 
 
-// const loadArticleDetails = async (article) =>{
-//     const url = `https://openapi.programming-hero.com/api/news/${article}`;
-//     const res = await fetch(url);
-//     const data = await res.json();
-
-//     displayArticleDetails(data.data);
-// }
-
-//Modal Section
-
-// update modal
+// API call to get details for the modal
 const updateModal = async(newsId) => {
     console.log(newsId);
     url = `https://openapi.programming-hero.com/api/news/${newsId}`;
@@ -178,7 +160,7 @@ const updateModal = async(newsId) => {
     }
 }
 
-// displayModal
+// Function to display the modal along with the information
 const displayModal = news => {
     // console.log(news);
     const modalTitle = document.getElementById('exampleModalLabel');
