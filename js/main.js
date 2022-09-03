@@ -1,5 +1,5 @@
 // Function to create and display the category names as list items
-const displayCategories = (categories) =>{
+const displayCategories = (categories) => {
     const categoryList = document.getElementById('category-list');
 
     for (let i=0; i<8; i++){
@@ -16,7 +16,7 @@ const displayCategories = (categories) =>{
 }
 
 // API call to get the category details
-const loadCategories = async() =>{
+const loadCategories = async() => {
     const url = 'https://openapi.programming-hero.com/api/news/categories';
     const res = await fetch(url);
     const data = await res.json();
@@ -25,3 +25,17 @@ const loadCategories = async() =>{
 
 // Function call to dynamically load the category names
 loadCategories();
+
+//Function that controls the display of spinners
+const toggleSpinner = isLoading => {
+    const loaderSection = document.getElementById('loader');
+    if(isLoading){
+        loaderSection.classList.remove('d-none');
+    }
+    else{
+        loaderSection.classList.add('d-none');
+    }
+}
+
+// Function to find the articles of selected category
+const articleSearch = (categoryName) => 
