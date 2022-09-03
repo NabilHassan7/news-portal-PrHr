@@ -37,13 +37,42 @@ const toggleSpinner = isLoading => {
     }
 }
 
+//Function to show the current number of articles being displayed
+const displayArticleNumber = (articleNumber) => {
+    const totalArticles = document.getElementById('total-articles');
+    totalArticles.innerHTML = `
+        <p  class="fs-3 fw-semibold">Currently ${articleNumber} articles are being displayed</p>
+    `;
+}
+
+//If no news article exists in a category this section is toggled
+const noNewsFound = (articleNumber) => {
+    if(articleNumber == 0){
+        
+    }
+    else{
+
+    }
+}
+
+//Function to display the articles selected by the API
+const displayArticles = (articles) => {
+    const articleContainer = document.getElementById('article-container');
+
+    articleContainer.innerHTML = ``;
+
+    const articleNumber = articles.length;
+    noNewsFound(articleNumber);
+    displayArticleNumber(articleNumber);
+}
 
 //API Call to find the articles for selected category
 const loadArticles = async (category_id) => {
     const url = `https://openapi.programming-hero.com/api/news/category/${category_id}`;
     const res = await fetch(url);
     const data = await res.json();
-    console.log(data.data);
+    
+    displayArticles(data.data);
 }
 
 
