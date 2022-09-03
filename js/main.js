@@ -65,6 +65,10 @@ const displayArticles = (articles) => {
     const articleNumber = articles.length;
     noNewsFound(articleNumber);
     displayArticleNumber(articleNumber);
+
+    articles.sort(function(a,b) {
+        return b.total_view - a.total_view;
+    })
     
     articles.forEach(article => {
         const articleDiv = document.createElement('div');
@@ -87,16 +91,16 @@ const displayArticles = (articles) => {
                         </div>
                         <div class="d-flex flex-column ms-1">
                             <div class="text-black fw-bold">
-                                <p>${article.author.name}</P>
+                                <p>${article.author.name ? article.author.name : 'Not available'}</P>
                             </div>
                             <div class="text-secondary fw-lighter" style="margin-top: -20px; font-size: 10px;">
-                                <p>${article.author.published_date}</p>
+                                <p>${article.author.published_date ? article.author.published_date : 'Not available'}</p>
                             </div>
                         </div>
                     </div>
                     <div>
                         <span><i class="fa-regular fa-eye"></i></span>
-                        <span class="fw-bold">${article.total_view}</span>
+                        <span class="fw-bold">${article.total_view ? article.total_view : 'Not available' }</span>
                     </div>
                     <div>
                         <span><i class="fa-solid fa-arrow-right fa-lg"></i></span>
