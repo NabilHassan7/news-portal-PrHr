@@ -66,12 +66,48 @@ const displayArticles = (articles) => {
     noNewsFound(articleNumber);
     displayArticleNumber(articleNumber);
     
-    // for(let i = 0; i <= articleNumber; i++){
-    //     console.log(articles[i].category_id);
-    // }
     articles.forEach(article => {
-        console.log(article.total_view);
-        
+        const articleDiv = document.createElement('div');
+         articleDiv.innerHTML=`
+         <div class="card mb-3" style="">
+         <div class="row g-0">
+           <div class="col-md-4">
+             <img src="${article.image_url}" class="img-fluid rounded-start" alt="">
+           </div>
+           <div class="col-md-8">
+             <div class="card-body" style="">
+               <h5 class="card-title">${article.title}</h5>
+               <div style="height: 180px; overflow: hidden; text-overflow: ellipsis;">
+                    <p class="card-text">${article.details}</p>
+               </div>
+               <div class="d-flex flex-row justify-content-between align-items-center">
+                    <div class="d-flex flex-row">
+                        <div>
+                            <img src="${article.author.img}" style="width:40px;" class="rounded-pill d-none d-md-inline d-ld-inline d-xl-inline">
+                        </div>
+                        <div class="d-flex flex-column ms-1">
+                            <div class="text-black fw-bold">
+                                <p>${article.author.name}</P>
+                            </div>
+                            <div class="text-secondary fw-lighter" style="margin-top: -20px; font-size: 10px;">
+                                <p>${article.author.published_date}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <span><i class="fa-regular fa-eye"></i></span>
+                        <span class="fw-bold">${article.total_view}</span>
+                    </div>
+                    <div>
+                        <span><i class="fa-solid fa-arrow-right fa-lg"></i></span>
+                    </div>
+               </div>
+             </div>
+           </div>
+        </div>
+        </div>
+         `
+        articleContainer.appendChild(articleDiv);
     });
 
     //Stopping the spinner animation
