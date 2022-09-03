@@ -47,11 +47,12 @@ const displayArticleNumber = (articleNumber) => {
 
 //If no news article exists in a category this section is toggled
 const noNewsFound = (articleNumber) => {
+    const noNews = document.getElementById('no-news');
     if(articleNumber == 0){
-        
+        noNews.classList.remove('d-none');
     }
     else{
-
+        noNews.classList.add('d-none');
     }
 }
 
@@ -64,6 +65,17 @@ const displayArticles = (articles) => {
     const articleNumber = articles.length;
     noNewsFound(articleNumber);
     displayArticleNumber(articleNumber);
+    
+    // for(let i = 0; i <= articleNumber; i++){
+    //     console.log(articles[i].category_id);
+    // }
+    articles.forEach(article => {
+        console.log(article.total_view);
+        
+    });
+
+    //Stopping the spinner animation
+    toggleSpinner(false);
 }
 
 //API Call to find the articles for selected category
