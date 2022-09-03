@@ -1,7 +1,8 @@
+// Function to create and display the category names as list items
 const displayCategories = (categories) =>{
     const categoryList = document.getElementById('category-list');
 
-    for (let i=0; i<=8; i++){
+    for (let i=0; i<8; i++){
         const categoryListItem = document.createElement('li');
 
         categoryListItem.innerHTML = `
@@ -14,7 +15,7 @@ const displayCategories = (categories) =>{
     }
 }
 
-
+// API call to get the category details
 const loadCategories = async() =>{
     const url = 'https://openapi.programming-hero.com/api/news/categories';
     const res = await fetch(url);
@@ -22,4 +23,5 @@ const loadCategories = async() =>{
     displayCategories(data.data);
 }
 
+// Function call to dynamically load the category names
 loadCategories();
