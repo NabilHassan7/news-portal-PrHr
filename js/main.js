@@ -88,7 +88,7 @@ const displayArticles = (articles) => {
              <div class="card-body" style="">
                <h5 class="card-title">${article.title}</h5>
                <div style="height: 180px; overflow: hidden; text-overflow: ellipsis;">
-                    <p class="card-text">${article.details}</p>
+                    <p class="card-text">${(article.details).slice(0,300)+' ...'}</p>
                </div>
                <div class="d-flex flex-row justify-content-between align-items-center">
                     <div class="d-flex flex-row">
