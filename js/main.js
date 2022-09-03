@@ -109,7 +109,7 @@ const displayArticles = (articles) => {
                         <span class="fw-bold">${article.total_view ? article.total_view : 'Not available' }</span>
                     </div>
                     <div>
-                        <button onclick="loadArticleDetails('${article._id}')" type="button" class="border-0 bg-white" data-bs-toggle="modal" data-bs-target="#articleModal"><i class="fa-solid fa-arrow-right fa-lg"></i></button>
+                        <button onclick="updateModal('${article._id}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Show Details<i class="fa-solid fa-arrow-right ms-2"></i></button>
                     </div>
                </div>
              </div>
@@ -162,7 +162,54 @@ const articleSearch = (categoryId) => {
 //     displayArticleDetails(data.data);
 // }
 
-// Function to display the blog section of the website
+//Modal Section
+
+// update modal
+const updateModal = async(newsId) => {
+    console.log(newsId);
+    url = `https://openapi.programming-hero.com/api/news/${newsId}`;
+    try{
+        const res = await fetch(url);
+        const data = await res.json();
+        displayModal(data.data);
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+// displayModal
+const displayModal = news => {
+    // console.log(news);
+    const modalTitle = document.getElementById('exampleModalLabel');
+    const modalText = document.getElementById('modal-text');
+    modalTitle.innerHTML = `
+    <div class="d-flex flex-column align-items-center">
+        <div>
+            <img class="img-fluid" style="width:300px;" src="${news[0].image_url}">
+        </div>
+        <div>
+            <h2 class="text-center">${news[0].title}</h2>
+        </div>
+    </div>
+    `;
+    modalText.innerHTML = `
+    ${news[0].details}
+    <br>
+    <br>
+
+    <img style="height:80px;" class="img-fluid rounded-circle" src="${news[0].author.img}">
+
+    <p>Author: <strong> ${news[0].author.name ? news[0].author.name: 'No information found'} </strong> </p>
+
+    <p>Published Date: ${news[0].author.published_date ? news[0].author.published_date: 'No information found'}</p>
+
+    <p>Total Views: ${news[0].total_view ? news[0].total_view: 'No information found'}</p>
+    `;
+}
+
+/* Function to display the blog section of the website */
+
 const showBlogContent = () =>{
     toggleSpinner(true);
 
