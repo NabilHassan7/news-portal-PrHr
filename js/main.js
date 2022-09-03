@@ -7,7 +7,7 @@ const displayCategories = (categories) => {
 
         categoryListItem.innerHTML = `
             <li class="nav-item mx-5">
-                <button class="btn btn-outline-secondary px-2 my-2 border-0 fs-5 fw-semibold">${categories.news_category[i].category_name}</button>
+                <button id="${categories.news_category[i].category_id}" class="btn btn-outline-secondary px-2 my-2 border-0 fs-5 fw-semibold" onclick=articleSearch('${categories.news_category[i].category_id}')>${categories.news_category[i].category_name}</button>
             </li>
         `;
 
@@ -37,5 +37,18 @@ const toggleSpinner = isLoading => {
     }
 }
 
+
+//API Call to find the articles for selected category
+const loadArticles = async (category_id) => {
+    const url = `https://openapi.programming-hero.com/api/news/category/${category_id}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    console.log(data.data);
+}
+
+
 // Function to find the articles of selected category
-const articleSearch = (categoryName) => 
+const articleSearch = (categoryId) => {
+    toggleSpinner(true);
+    loadArticles(categoryId);
+} 
