@@ -18,9 +18,14 @@ const displayCategories = (categories) => {
 // API call to get the category details
 const loadCategories = async() => {
     const url = 'https://openapi.programming-hero.com/api/news/categories';
-    const res = await fetch(url);
-    const data = await res.json();
-    displayCategories(data.data);
+    try{
+        const res = await fetch(url);
+        const data = await res.json();
+        displayCategories(data.data);
+    }
+    catch(error){
+        console.log(error);
+    }
 }
 
 // Function call to dynamically load the category names
@@ -66,6 +71,7 @@ const displayArticles = (articles) => {
     noNewsFound(articleNumber);
     displayArticleNumber(articleNumber);
 
+    //Sorting the articles according to descending number of views
     articles.sort(function(a,b) {
         return b.total_view - a.total_view;
     })
@@ -103,7 +109,7 @@ const displayArticles = (articles) => {
                         <span class="fw-bold">${article.total_view ? article.total_view : 'Not available' }</span>
                     </div>
                     <div>
-                        <span><i class="fa-solid fa-arrow-right fa-lg"></i></span>
+                        <button onclick="loadArticleDetails('${article._id}')" type="button" class="border-0 bg-white" data-bs-toggle="modal" data-bs-target="#articleModal"><i class="fa-solid fa-arrow-right fa-lg"></i></button>
                     </div>
                </div>
              </div>
@@ -121,10 +127,14 @@ const displayArticles = (articles) => {
 //API Call to find the articles for selected category
 const loadArticles = async (category_id) => {
     const url = `https://openapi.programming-hero.com/api/news/category/${category_id}`;
-    const res = await fetch(url);
-    const data = await res.json();
-    
-    displayArticles(data.data);
+    try{
+        const res = await fetch(url);
+        const data = await res.json(); 
+        displayArticles(data.data);
+    }
+    catch(error){
+        console.log(error);
+    }
 }
 
 
@@ -132,4 +142,111 @@ const loadArticles = async (category_id) => {
 const articleSearch = (categoryId) => {
     toggleSpinner(true);
     loadArticles(categoryId);
-} 
+}
+
+//Modal Section
+// const displayArticleDetails = (articleDetails) =>{
+//     const modalTitle = document.getElementById('articleModalLabel');
+//     modalTitle.innerText = articleDetails[0].title;
+//     const articleModalDetails = document.getElementById('article-details');
+//     articleModalDetails.innerHTML = `
+//         <img src="${articleDetails.image_url}" class="img-fluid rounded-start" alt="">
+//     `
+// } 
+
+// const loadArticleDetails = async (article) =>{
+//     const url = `https://openapi.programming-hero.com/api/news/${article}`;
+//     const res = await fetch(url);
+//     const data = await res.json();
+
+//     displayArticleDetails(data.data);
+// }
+
+// Function to display the blog section of the website
+const showBlogContent = () =>{
+    toggleSpinner(true);
+
+    const blogContainer = document.getElementById('article-container');
+
+    blogContainer.innerHTML = ``;
+
+    const blogDiv = document.createElement('div');
+    blogDiv.innerHTML=`
+    <div class="accordion mx-5" id="accordionPanelsStayOpenExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+        <button class="accordion-button fw-bold fs-3" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+          #1 What are the differences between the var and the let constants?
+        </button>
+      </h2>
+      <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+        <div class="accordion-body fw-semibold fs-5">
+          The differences between var and let variable declaration in JavaScript include:
+          Variables declared with var is scoped to the immediate function body.
+          Variables declared with the var keyword are hoisted. Hoisting means that the variable can be accessed in their enclosing scope even before they are declared.
+          Variables declared with the let keyword are block-scoped, which means the variables will have scope to the immediate enclosing block.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+        <button class="accordion-button collapsed fw-bold fs-3" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+          #2 What are the differences betweem regular and arrow function declaration?
+        </button>
+      </h2>
+      <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+        <div class="accordion-body fw-semibold fs-5">
+          In regular function, we have to use return keyword to return any value. If we don’t return anything then the function will return undefined.
+          Arrow functions behave in the same way when returning values. If the arrow function contains one expression, we can omit the curly braces, and then the expression will be implicitly returned.
+          In regular function, Arguments keywords can be used to access the arguments of which passed to function. Arrow functions do not have an arguments binding.
+          Arrow functions don’t have their own <code>this</code>, and they don’t redefine the value of <code>this</code> within the function. <code>this</code> inside an arrow function always refers to this from the outer context.
+          Regular functions are constructible, they can be called using the new keyword.
+          However, arrow functions can never be used as constructor functions. Hence, they can never be invoked with the new keyword.
+          Arrow functions can never have duplicate named parameters, whether in strict or non-strict mode.
+          In regular function, function gets hoisting at top. In arrow function, function get hoisted where you define. So, if you call the function before initialisation you will get referenceError.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+        <button class="accordion-button collapsed fw-bold fs-3" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+          #3 What are the differences between map(), forEach(), filter() and find()?
+        </button>
+      </h2>
+      <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+        <div class="accordion-body fw-semibold fs-5">
+          The <code>map()</code>  method creates a new array populated with the results of calling a provided function on every element in the calling array.
+          The <code>forEach()</code>  method executes a provided function once for each array element.
+          The <code>filter() </code>method creates a shallow copy of a portion of a given array, filtered down to just the elements from the given array that pass the test implemented by the provided function.
+          The <code>find()</code> method returns the first element in the provided array that satisfies the provided testing function. If no values satisfy the testing function, undefined is returned.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="panelsStayOpen-headingFour">
+        <button class="accordion-button collapsed fw-bold fs-3" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
+          #4 What is the reason for using template strings?
+        </button>
+      </h2>
+      <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
+        <div class="accordion-body fw-semibold fs-5">
+          Template strings, better known as Template literals, are literals delimited with backtick characters, allowing for multi-line strings, for string interpolation with embedded expressions, and for special constructs called tagged templates.
+          Template literals are sometimes informally called template strings, because they are used most commonly for string interpolation (to create strings by doing substitution of placeholders). 
+          However, a tagged template literal may not result in a string; it can be used with a custom tag function to perform whatever operations you want on the different parts of the template literal.
+        </div>
+      </div>
+    </div>
+  </div>
+    `
+    blogContainer.appendChild(blogDiv);
+
+    const totalArticles = document.getElementById('total-articles');
+    totalArticles.innerHTML = `
+        <p class="fs-3 fw-semibold">You are currently viewing the Blog Section</p>
+    `
+
+    toggleSpinner(false);
+}
+
+//Default function call to create a homepage
+articleSearch('01');
