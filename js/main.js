@@ -273,7 +273,8 @@ const showBlogContent = () =>{
     totalArticles.innerHTML = `
         <p class="fs-3 fw-semibold">You are currently viewing the Blog Section</p>
     `
-
+    const noNews = document.getElementById('no-news');
+    noNews.classList.add('d-none');
     toggleSpinner(false);
 }
 
